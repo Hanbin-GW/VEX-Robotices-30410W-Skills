@@ -10,6 +10,10 @@
 #include "lemlib/chassis/odom.hpp"
 #include "lemlib/chassis/chassis.hpp"
 
+#include "liblvgl/display/lv_display.h"
+#include "liblvgl/misc/lv_area.h"
+#include "liblvgl/widgets/image/lv_image.h"
+
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 pros::MotorGroup leftMotors({-1, -2});
@@ -79,6 +83,8 @@ lemlib::Chassis chassis(
     angularController,
     sensors);
 
+LV_IMAGE_DECLARE(theghost);
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -87,7 +93,26 @@ lemlib::Chassis chassis(
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	imu.reset();
+	chassis.calibrate();
+	pros::lcd::set_text(1, "Skills code initialize!");
+
+	/* =================== Lv Screen ICON =================== */
+
+	lv_obj_t *img = lv_image_create(lv_screen_active());
+	lv_image_set_src(img, &theghost);
+
+	lv_coord_t sw = lv_display_get_horizontal_resolution(NULL);
+	lv_coord_t sh = lv_display_get_vertical_resolution(NULL);
+
+	lv_obj_set_size(img, 75, 75);
+	lv_image_set_inner_align(img, LV_IMAGE_ALIGN_STRETCH);
+	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, -15, 15);
+	
+	/* ====================================================== */
+
+	leftMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
+	rightMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -119,7 +144,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	chassis.moveToPoint(0, 36, 5000);
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
