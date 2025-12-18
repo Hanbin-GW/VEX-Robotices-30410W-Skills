@@ -33,13 +33,13 @@ pros::adi::DigitalOut pneumatics_2 ('B');
 lemlib::TrackingWheel vertical(
     &vertical_rotation_sensor,
     lemlib::Omniwheel::NEW_2,
-    0.0 // tracking center에서의 오프셋 (오른쪽이 양수)
+    0.0
 );
 
 lemlib::TrackingWheel horizontal(
     &horizontal_rotation_sensor,
     lemlib::Omniwheel::NEW_2,
-    0.0 // tracking center에서의 오프셋 (앞쪽이 양수)
+    0.0
 );
 
 lemlib::Drivetrain drivetrain(&leftMotors,		    // left motor group
@@ -137,27 +137,21 @@ void autonomous() {}
 
 void opcontrol()
 {
-	// pros::Controller master(pros::E_CONTROLLER_MASTER);
-	// pros::MotorGroup left_mg({-1, -2});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
-	// pros::MotorGroup right_mg({-19, -20});  // Creates a motor group with forwards port 5 and reversed ports 4 & 6
 	pneumatics_1.set_value(true);
 	pneumatics_2.set_value(true);
 	while (true)
 	{
 		
 		
-		/*pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-				     (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-				     (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0); // Prints status of the emulated screen LCDs*/
-		// Arcade control scheme
-		int dir = controller.get_analog(ANALOG_LEFT_Y);	  // Gets amount forward/backward from left joystick
-		int turn = controller.get_analog(ANALOG_RIGHT_X); // Gets the turn left/right from right joystick
+		
+		int dir = controller.get_analog(ANALOG_LEFT_Y);
+		int turn = controller.get_analog(ANALOG_RIGHT_X);
 		bool in = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
 		bool out = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
 		bool Y = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
 		bool A = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
-		leftMotors.move(dir + turn);	// Sets left motor voltage
-		rightMotors.move(dir - turn); // Sets right motor voltage
+		leftMotors.move(dir + turn);	
+		rightMotors.move(dir - turn); 
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			pneumatics_1.set_value(false);
@@ -170,25 +164,17 @@ void opcontrol()
 		}
 		if (in && !out)
 		{
-			// 전압 제어: 즉각 세게 도는지 확인하기 좋음
-			intake.move(127); // [-127..127] 전압
+			intake.move(127);
 			outtake.move(127);
-			// outtake.move_voltage(12000);
-			//  또는 속도 제어: 기어셋에 맞춰 rpm 값 사용
-			//  intake.move_velocity(300); // 300rpm (기어셋이 600rpm이면 절반 속도)
 		}
 		else if (out && !in)
 		{
 			intake.move(-127);
 			outtake.move(-127);
-			// outtake.move_voltage(-12000);
-			//  intake.move_velocity(-300);
 		}
 		else
 		{
-			intake.brake(); // 또는 intake.move(0);
-			// intake_2.brake();
-			// intake_1.brake();
+			intake.brake();
 			outtake.brake();
 		}
 
