@@ -145,7 +145,26 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis.moveToPoint(0, 36, 5000);
+	pneumatics_1.set_value(true);
+	pneumatics_2.set_value(true);
+
+	// chassis.setPose(0, 0, 0);
+	chassis.moveToPoint(16.22, 41.505, 5000);
+	intake.move_voltage(12000);
+	pros::delay(500);
+	intake.brake();
+	chassis.moveToPoint(-5.486, -59.394, 5000);
+	intake.move_voltage(-12000);
+	pros::delay(1500);
+	intake.brake();
+	chassis.moveToPoint(-28.385,  44.844, 5000);
+	intake.move_voltage(12000);
+	pros::delay(500);
+	intake.brake();
+	chassis.moveToPoint(-59.394, 41.982, 5000);
+	intake.move_voltage(12000);
+	pros::delay(2000);
+	intake.brake();
 }
 
 /**
