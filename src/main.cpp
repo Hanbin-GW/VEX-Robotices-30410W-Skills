@@ -71,11 +71,11 @@ lemlib::ControllerSettings angularController(
 	80);
 
 lemlib::OdomSensors sensors(
-    nullptr,
-    nullptr,
-    &vertical,
-    nullptr,
-    &imu);
+	&vertical,
+	nullptr,
+	nullptr,
+	&horizontal,
+	&imu);
 
 lemlib::Chassis chassis(
     drivetrain,
@@ -166,15 +166,15 @@ void autonomous() {
 	intake.move_voltage(12000);
 	pros::delay(500);
 	intake.brake();
-	chassis.moveToPoint(-5.486, -59.394, 5000, {.forwards = false});
+	chassis.moveToPoint(-5.486, -59.394, 5000);
 	intake.move_voltage(-12000);
 	pros::delay(1500);
 	intake.brake();
-	chassis.moveToPoint(-28.385,  44.844, 5000, {.forwards = true});
+	chassis.moveToPoint(-28.385,  44.844, 5000);
 	intake.move_voltage(12000);
 	pros::delay(500);
 	intake.brake();
-	chassis.moveToPoint(-59.394, 41.982, 5000, {.forwards = false});
+	chassis.moveToPoint(-59.394, 41.982, 5000);
 	intake.move_voltage(12000);
 	pros::delay(2000);
 	intake.brake();
