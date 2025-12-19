@@ -56,19 +56,19 @@ lemlib::Drivetrain drivetrain(&leftMotors,		    // left motor group
 
 lemlib::ControllerSettings linearController(
     //      0, 10, 10,   // kP, kI, kD
-    3, 0.5, 9, // kP, kI, kD
+    10, 0, 15, // kP, kI, kD
     0,	   // anti-windup
-    0, 100,	   // smallError,  smallErrorTimeout(ms)
+    1, 100,	   // smallError,  smallErrorTimeout(ms)
     3, 500,	   // largeError,  largeErrorTimeout(ms)
-    100	   // slew rate
+    60	   // slew rate
 );
 
 lemlib::ControllerSettings angularController(
-	4.5, 0.5, 13,
+	4.0, 0, 25.0,
 	0,
-	0, 100,
+	1, 100,
 	3, 500,
-	100);
+	80);
 
 lemlib::OdomSensors sensors(
     nullptr,
@@ -83,7 +83,7 @@ lemlib::Chassis chassis(
     angularController,
     sensors);
 
-LV_IMAGE_DECLARE(theghost);
+LV_IMAGE_DECLARE(JSOC);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -93,19 +93,32 @@ LV_IMAGE_DECLARE(theghost);
  */
 void initialize() {
 	pros::lcd::initialize();
-	imu.reset();
+	// imu.reset();
 	chassis.calibrate();
 	pros::lcd::set_text(1, "Skills code initialize!");
+
+	pros::Task screenTask([&]() -> void {
+		while(true){
+			pros::lcd::print(0, "X: %f",chassis.getPose().x);
+			pros::lcd::print(1, "Y: %f",chassis.getPose().y);
+			pros::lcd::print(2," Theta: %f",chassis.getPose().theta);
+			pros::lcd::print(3, "IMU heading: %.1f", imu.get_heading());
+			pros::lcd::print(4, "Pose theta: %.1f", chassis.getPose().theta);
+			lemlib::telemetrySink() -> info("Chassis pose: {}", chassis.getPose());
+
+			pros::delay(50);
+		}
+	});
 
 	/* =================== Lv Screen ICON =================== */
 
 	lv_obj_t *img = lv_image_create(lv_screen_active());
-	lv_image_set_src(img, &theghost);
+	lv_image_set_src(img, &JSOC);
 
 	lv_coord_t sw = lv_display_get_horizontal_resolution(NULL);
 	lv_coord_t sh = lv_display_get_vertical_resolution(NULL);
 
-	lv_obj_set_size(img, 75, 75);
+	lv_obj_set_size(img, 100, 100);
 	lv_image_set_inner_align(img, LV_IMAGE_ALIGN_STRETCH);
 	lv_obj_align(img, LV_ALIGN_TOP_RIGHT, -15, 15);
 	
@@ -153,15 +166,15 @@ void autonomous() {
 	intake.move_voltage(12000);
 	pros::delay(500);
 	intake.brake();
-	chassis.moveToPoint(-5.486, -59.394, 5000);
+	chassis.moveToPoint(-5.486, -59.394, 5000, {.forwards = false});
 	intake.move_voltage(-12000);
 	pros::delay(1500);
 	intake.brake();
-	chassis.moveToPoint(-28.385,  44.844, 5000);
+	chassis.moveToPoint(-28.385,  44.844, 5000, {.forwards = true});
 	intake.move_voltage(12000);
 	pros::delay(500);
 	intake.brake();
-	chassis.moveToPoint(-59.394, 41.982, 5000);
+	chassis.moveToPoint(-59.394, 41.982, 5000, {.forwards = false});
 	intake.move_voltage(12000);
 	pros::delay(2000);
 	intake.brake();
