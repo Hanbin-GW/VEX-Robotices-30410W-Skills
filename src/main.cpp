@@ -30,7 +30,7 @@ pros::Vision vision_sensor(14);
 pros::Gps gps(12);
 pros::Imu imu(5); 
 pros::Rotation vertical_rotation_sensor(15);
-pros::Rotation horizontal_rotation_sensor(16);
+pros::Rotation horizontal_rotation_sensor(3); // should be change later port3 -> port 16
 pros::adi::DigitalOut pneumatics_1 ('A');
 pros::adi::DigitalOut pneumatics_2 ('B');
 
@@ -73,8 +73,8 @@ lemlib::ControllerSettings angularController(
 lemlib::OdomSensors sensors(
 	&vertical,
 	nullptr,
-	nullptr,
 	&horizontal,
+	nullptr,
 	&imu);
 
 lemlib::Chassis chassis(
