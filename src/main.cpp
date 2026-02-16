@@ -168,7 +168,9 @@ void autonomous() {
 	chassis.moveToPoint(-18.144, 38.557, 5000);
 	chassis.moveToPoint(33.517, 40.321, 5000);
 	chassis.moveToPoint(59.473, 36.289, 5000);
-
+	chassis.moveToPoint(74.593, 38.809, 5000);
+	chassis.moveToPoint(74.089, 98.786, 5000);
+	chassis.moveToPoint(36.037, 93.242, 5000);
 
 	// chassis.moveToPoint(10,20,5000);
 	// chassis.moveToPose(10,20,90,5000);
