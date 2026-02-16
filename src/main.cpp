@@ -47,7 +47,7 @@ lemlib::TrackingWheel horizontal(
 
 lemlib::Drivetrain drivetrain(&rightMotors,		    // left motor group
 					&leftMotors,		    // right motor group
-					26,				    // 26 inch track width
+					12.5,				    // 12.5 inch track width
 					lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
 					360,				    // drivetrain rpm is 500
 					2				    // horizontal drift is 2. If we had traction wheels, it would have been 8
@@ -165,6 +165,55 @@ void autonomous() {
 	chassis.moveToPoint(-12.6, 19.656, 5000);
 	chassis.moveToPoint(-33.769, 18.396, 5000);
 	chassis.moveToPoint(-33.265, 37.297, 5000);
+	chassis.moveToPoint(-18.144, 38.557, 5000);
+	chassis.moveToPoint(33.517, 40.321, 5000);
+	chassis.moveToPoint(59.473, 36.289, 5000);
+
+
+	// chassis.moveToPoint(10,20,5000);
+	// chassis.moveToPose(10,20,90,5000);
+	// chassis.moveToPoint(0,0,5000, {.forwards = false,});
+
+	// chassis.moveToPoint(10,10, 5000);
+	// chassis.moveToPoint(10,20, 5000);
+	// chassis.moveToPoint(0,0, 5000, {.forwards = false,});
+
+
+
+	// chassis.follow(proto_txt, 15, 2000);
+	// * remember * //
+	// chassis.moveToPoint(0, 0, 5000);
+	// chassis.moveToPoint(0,20, 15000);
+	// chassis.moveToPoint(5, 25, 5000);
+	// chassis.turnToHeading(90, 3000);
+	// chassis.moveToPose(30,0,90,5000);
+	// intake.move_voltage(12000);
+	// outtake.move_voltage(12000);
+	// pros::delay(8000);
+	// intake.brake();
+	// outtake.brake();
+	// chassis.moveToPoint(-12.95, 31, 5000);
+	// chassis.moveToPoint(-1.494, 55.768, 5000);
+	// * don't remove *//
+
+	// chassis.follow(auton_new_txt, 10, 5000, true, false);
+
+	// chassis.setPose(66.867, -13.119, 75.692);
+	// chassis.follow(decoder["Path"], 15, 2000, true, false); // blocking
+
+	// chassis.moveTo(0, 0, 5000);
+	// chassis.moveTo(-11.132, 27.417, 5000);
+	// chassis.moveTo(-1.338, 52.499, 5000);
+
+
+
+	// chassis.moveToPoint(0, 0, 5000);
+	// chassis.moveToPoint(-11.95, 30.623, 5000);
+	// chassis.moveToPoint(-2.988, 52.78, 5000);
+
+
+	// chassis.moveToPoint(0, 0, 5000);
+	// chassis.moveToPoint(-4.422, 30.146, 5000);
 
 }
 
@@ -202,11 +251,17 @@ void opcontrol()
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 		{
 			pneumatics_1.set_value(false);
-			pneumatics_2.set_value(false);
 		}
 		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_B))
 		{
 			pneumatics_1.set_value(true);
+		}
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+		{
+			pneumatics_2.set_value(false);
+		}
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		{
 			pneumatics_2.set_value(true);
 		}
 		if (in && !out)
