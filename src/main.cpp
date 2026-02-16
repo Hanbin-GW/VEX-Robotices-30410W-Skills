@@ -16,8 +16,8 @@
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup leftMotors({-1, -2});
-pros::MotorGroup rightMotors({19, 20});
+pros::MotorGroup leftMotors({1, 2});
+pros::MotorGroup rightMotors({-19, -20});
 
 pros::Motor intake_1(18);
 pros::Motor intake_2(17);
@@ -26,49 +26,48 @@ pros::MotorGroup intake({18, -17});
 
 pros::Motor outtake(3);
 
-pros::Vision vision_sensor(14);
-pros::Gps gps(12);
 pros::Imu imu(5); 
-pros::Rotation vertical_rotation_sensor(15);
-pros::Rotation horizontal_rotation_sensor(3); // should be change later port3 -> port 16
+pros::Rotation vertical_rotation_sensor(-15);
+pros::Rotation horizontal_rotation_sensor(-16); // should be change later port3 -> port 16
 pros::adi::DigitalOut pneumatics_1 ('A');
 pros::adi::DigitalOut pneumatics_2 ('B');
 
 lemlib::TrackingWheel vertical(
     &vertical_rotation_sensor,
     lemlib::Omniwheel::NEW_2,
-    0.0
+    -5.91	// Don't change!
 );
 
 lemlib::TrackingWheel horizontal(
     &horizontal_rotation_sensor,
     lemlib::Omniwheel::NEW_2,
-    0.0
+    0	// Don't change!
 );
 
-lemlib::Drivetrain drivetrain(&leftMotors,		    // left motor group
-					&rightMotors,		    // right motor group
+
+lemlib::Drivetrain drivetrain(&rightMotors,		    // left motor group
+					&leftMotors,		    // right motor group
 					26,				    // 26 inch track width
 					lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
-					500,				    // drivetrain rpm is 500
+					360,				    // drivetrain rpm is 500
 					2				    // horizontal drift is 2. If we had traction wheels, it would have been 8
 );
 
 lemlib::ControllerSettings linearController(
     //      0, 10, 10,   // kP, kI, kD
-    10, 0, 15, // kP, kI, kD
+    14, 0, 52, // kP, kI, kD
     0,	   // anti-windup
     1, 100,	   // smallError,  smallErrorTimeout(ms)
     3, 500,	   // largeError,  largeErrorTimeout(ms)
-    60	   // slew rate
+    30	   // slew rate
 );
 
 lemlib::ControllerSettings angularController(
-	4.0, 0, 25.0,
+	2.0, 0, 60.0,
 	0,
 	1, 100,
 	3, 500,
-	80);
+	40);
 
 lemlib::OdomSensors sensors(
 	&vertical,
@@ -161,23 +160,12 @@ void autonomous() {
 	pneumatics_1.set_value(true);
 	pneumatics_2.set_value(true);
 
-	// chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(16.22, 41.505, 5000);
-	intake.move_voltage(12000);
-	pros::delay(500);
-	intake.brake();
-	chassis.moveToPoint(-5.486, -59.394, 5000);
-	intake.move_voltage(-12000);
-	pros::delay(1500);
-	intake.brake();
-	chassis.moveToPoint(-28.385,  44.844, 5000);
-	intake.move_voltage(12000);
-	pros::delay(500);
-	intake.brake();
-	chassis.moveToPoint(-59.394, 41.982, 5000);
-	intake.move_voltage(12000);
-	pros::delay(2000);
-	intake.brake();
+	chassis.moveToPoint(0, 0, 5000);
+	chassis.moveToPoint(-11.592, 41.077, 5000);
+	chassis.moveToPoint(-12.6, 19.656, 5000);
+	chassis.moveToPoint(-33.769, 18.396, 5000);
+	chassis.moveToPoint(-33.265, 37.297, 5000);
+
 }
 
 /**
