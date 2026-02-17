@@ -162,60 +162,20 @@ void autonomous() {
 
 	chassis.moveToPoint(0, 0, 5000);
 	chassis.moveToPoint(-11.592, 41.077, 5000);
+	//** Logic code of get intake */
 	chassis.moveToPoint(-12.6, 19.656, 5000);
 	chassis.moveToPoint(-33.769, 18.396, 5000);
 	chassis.moveToPoint(-33.265, 37.297, 5000);
 	chassis.moveToPoint(-18.144, 38.557, 5000);
+	//** Logic code of get intake */
 	chassis.moveToPoint(33.517, 40.321, 5000);
+	//** Logic code of get intake */
 	chassis.moveToPoint(59.473, 36.289, 5000);
 	chassis.moveToPoint(74.593, 38.809, 5000);
+	//** Scoring */
 	chassis.moveToPoint(74.089, 98.786, 5000);
 	chassis.moveToPoint(36.037, 93.242, 5000);
-
-	// chassis.moveToPoint(10,20,5000);
-	// chassis.moveToPose(10,20,90,5000);
-	// chassis.moveToPoint(0,0,5000, {.forwards = false,});
-
-	// chassis.moveToPoint(10,10, 5000);
-	// chassis.moveToPoint(10,20, 5000);
-	// chassis.moveToPoint(0,0, 5000, {.forwards = false,});
-
-
-
-	// chassis.follow(proto_txt, 15, 2000);
-	// * remember * //
-	// chassis.moveToPoint(0, 0, 5000);
-	// chassis.moveToPoint(0,20, 15000);
-	// chassis.moveToPoint(5, 25, 5000);
-	// chassis.turnToHeading(90, 3000);
-	// chassis.moveToPose(30,0,90,5000);
-	// intake.move_voltage(12000);
-	// outtake.move_voltage(12000);
-	// pros::delay(8000);
-	// intake.brake();
-	// outtake.brake();
-	// chassis.moveToPoint(-12.95, 31, 5000);
-	// chassis.moveToPoint(-1.494, 55.768, 5000);
-	// * don't remove *//
-
-	// chassis.follow(auton_new_txt, 10, 5000, true, false);
-
-	// chassis.setPose(66.867, -13.119, 75.692);
-	// chassis.follow(decoder["Path"], 15, 2000, true, false); // blocking
-
-	// chassis.moveTo(0, 0, 5000);
-	// chassis.moveTo(-11.132, 27.417, 5000);
-	// chassis.moveTo(-1.338, 52.499, 5000);
-
-
-
-	// chassis.moveToPoint(0, 0, 5000);
-	// chassis.moveToPoint(-11.95, 30.623, 5000);
-	// chassis.moveToPoint(-2.988, 52.78, 5000);
-
-
-	// chassis.moveToPoint(0, 0, 5000);
-	// chassis.moveToPoint(-4.422, 30.146, 5000);
+	//** Logic code of get intake */
 
 }
 
