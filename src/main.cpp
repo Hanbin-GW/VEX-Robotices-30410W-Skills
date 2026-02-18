@@ -16,8 +16,8 @@
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup leftMotors({1, 2});
-pros::MotorGroup rightMotors({-19, -20});
+pros::MotorGroup rightMotors({1, 2});
+pros::MotorGroup leftMotors({-19, -20});
 
 pros::Motor intake_1(18);
 pros::Motor intake_2(17);
