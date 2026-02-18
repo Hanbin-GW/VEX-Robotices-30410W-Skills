@@ -35,7 +35,7 @@ pros::adi::DigitalOut pneumatics_2 ('B');
 lemlib::TrackingWheel vertical(
     &vertical_rotation_sensor,
     lemlib::Omniwheel::NEW_2,
-    -5.91	// Don't change!
+    -5.9	// Don't change!
 );
 
 lemlib::TrackingWheel horizontal(
@@ -55,19 +55,19 @@ lemlib::Drivetrain drivetrain(&rightMotors,		    // left motor group
 
 lemlib::ControllerSettings linearController(
     //      0, 10, 10,   // kP, kI, kD
-    14, 0, 52, // kP, kI, kD
+    10, 0, 58, // kP, kI, kD
     0,	   // anti-windup
     1, 100,	   // smallError,  smallErrorTimeout(ms)
     3, 500,	   // largeError,  largeErrorTimeout(ms)
-    30	   // slew rate
+    0	   // slew rate
 );
 
 lemlib::ControllerSettings angularController(
-	2.0, 0, 60.0,
+	10, 0, 78,	// kP, kI, kD
 	0,
 	1, 100,
 	3, 500,
-	40);
+	0);
 
 lemlib::OdomSensors sensors(
 	&vertical,
@@ -161,22 +161,35 @@ void autonomous() {
 	pneumatics_2.set_value(true);
 
 	chassis.moveToPoint(0, 0, 5000);
-	chassis.moveToPoint(-11.592, 41.077, 5000);
-	//** Logic code of get intake */
-	chassis.moveToPoint(-12.6, 19.656, 5000);
-	chassis.moveToPoint(-33.769, 18.396, 5000);
-	chassis.moveToPoint(-33.265, 37.297, 5000);
-	chassis.moveToPoint(-18.144, 38.557, 5000);
-	//** Logic code of get intake */
-	chassis.moveToPoint(33.517, 40.321, 5000);
-	//** Logic code of get intake */
-	chassis.moveToPoint(59.473, 36.289, 5000);
-	chassis.moveToPoint(74.593, 38.809, 5000);
-	//** Scoring */
-	chassis.moveToPoint(74.089, 98.786, 5000);
-	chassis.moveToPoint(36.037, 93.242, 5000);
-	//** Logic code of get intake */
-
+	chassis.moveToPoint(-4.331, 38.258, 5000);
+	//** Intake logic */
+	intake.move(100);
+	pros::delay(500);
+	intake.brake();
+	//* ------------- */
+	chassis.moveToPoint(-32.002, 35.13, 5000);
+	//** Socring logic */
+	intake.move(127);
+	pros::delay(1500);
+	intake.brake();
+	//* ------------- */
+	chassis.moveToPoint(-31.762, -1.444, 5000);
+	//** Loder logic */
+	pneumatics_2.set_value(false);
+	intake.move(127);
+	pros::delay(500);
+	intake.brake();
+	chassis.moveToPoint(-31.762, 0, 5000);
+	pneumatics_2.set_value(true);
+	//* ------------- */
+	chassis.moveToPoint(-6.256, 12.512, 5000);
+	chassis.moveToPoint(62.561, 12.512, 5000);
+	chassis.moveToPoint(62.561, 33.687, 5000);
+	//** Scoring logic */
+	intake.move(127);
+	pros::delay(1500);
+	intake.brake();
+	//* ------------- */
 }
 
 /**
