@@ -55,7 +55,7 @@ lemlib::Drivetrain drivetrain(&rightMotors,		    // left motor group
 
 lemlib::ControllerSettings linearController(
     //      0, 10, 10,   // kP, kI, kD
-    10, 0, 58, // kP, kI, kD
+    10, 0, 140, // kP, kI, kD
     0,	   // anti-windup
     1, 100,	   // smallError,  smallErrorTimeout(ms)
     3, 500,	   // largeError,  largeErrorTimeout(ms)
@@ -63,7 +63,7 @@ lemlib::ControllerSettings linearController(
 );
 
 lemlib::ControllerSettings angularController(
-	10, 0, 78,	// kP, kI, kD
+	5, 0, 110,	// kP, kI, kD
 	0,
 	1, 100,
 	3, 500,
