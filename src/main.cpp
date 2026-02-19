@@ -161,19 +161,19 @@ void autonomous() {
 	pneumatics_2.set_value(true);
 
 	chassis.moveToPoint(0, 0, 5000);
-	chassis.moveToPoint(-4.091, 32.483, 5000);
+	chassis.moveToPoint(-4.091, 38.258, 5000);
 	//** Intake logic */
 	intake.move(100);
 	pros::delay(500);
 	intake.brake();
 	//* ------------- */
-	chassis.moveToPoint(-31.762, 29.355, 5000);
+	chassis.moveToPoint(-31.762, 35.13, 5000);
 	//** Socring logic */
 	intake.move(127);
 	pros::delay(1500);
 	intake.brake();
 	//* ------------- */
-	chassis.moveToPoint(-31.521, -7.219, 5000);
+	chassis.moveToPoint(-31.521, -1.444, 5000);
 	//** Loder logic */
 	pneumatics_2.set_value(false);
 	intake.move(127);
@@ -182,9 +182,9 @@ void autonomous() {
 	chassis.moveToPoint(-31.762, 0, 5000);
 	pneumatics_2.set_value(true);
 	//* ------------- */
-	chassis.moveToPoint(-6.015, 6.737, 5000);
-	chassis.moveToPoint(62.801, 6.737, 5000);
-	chassis.moveToPoint(62.801, 27.912, 5000);
+	chassis.moveToPoint(6.015, 12.512, 5000);
+	chassis.moveToPoint(62.801, 12.512, 5000);
+	chassis.moveToPoint(62.801, 33.687, 5000);
 	//** Scoring logic */
 	intake.move(127);
 	pros::delay(1500);
